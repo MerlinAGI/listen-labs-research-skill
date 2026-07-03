@@ -1,7 +1,4 @@
-<p align="center">
-  <!-- Logo placeholder — drop your logo at assets/logo.png (or change the path/width here) -->
-  <img src="assets/logo.png" alt="Listen Labs" width="160">
-</p>
+
 
 <h1 align="center">Listen Labs Customer Research Skill</h1>
 
