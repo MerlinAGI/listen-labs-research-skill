@@ -25,13 +25,18 @@ they're in, then have them retry their request.
 
 ### Claude.ai (web) and Claude Desktop
 
-1. Open **Settings → Connectors** (also reachable via *Customize → Connectors*).
-2. Click **Browse connectors** and search for **"Listen Labs"** — it's an official
-   connector. (If it doesn't appear, use **Add custom connector** with the server URL
-   `https://listenlabs.ai/mcp`.)
-3. Click **Connect**, log in to Listen Labs in the OAuth window, and approve access.
-4. In a new or existing chat, make sure the Listen Labs connector is enabled in the
+Listen Labs is an **official connector** in the Claude directory, so no custom-URL setup
+is needed:
+
+1. Open the directory listing — <https://claude.ai/directory/connectors/listen-labs> —
+   and click **Connect**. (Equivalent path: **Settings → Connectors → Browse connectors**,
+   search **"Listen Labs"**, **Connect**.)
+2. Log in to Listen Labs in the OAuth window and approve access.
+3. In a new or existing chat, make sure the Listen Labs connector is enabled in the
    tools/search-and-tools menu.
+
+Only fall back to **Add custom connector** with the server URL `https://listenlabs.ai/mcp`
+if the directory listing isn't available in the user's org.
 
 ### Claude Code (CLI)
 
@@ -53,8 +58,9 @@ Then authenticate when prompted.
 
 ### ChatGPT
 
-Search for **"Listen Labs"** in the **Apps** section (official OpenAI App Store listing)
-and connect from there.
+Official app-store listing:
+<https://chatgpt.com/apps/listen-labs/asdk_app_6a0765f330f08191a2e5d95f075948a9> — or
+search for **"Listen Labs"** in the **Apps** section and connect from there.
 
 ### Other MCP clients
 

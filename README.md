@@ -37,8 +37,8 @@ Then run `/mcp` in a session to complete the OAuth login.
 project instead, and drop `--scope user` from the `claude mcp add` command.
 
 **Claude.ai / Claude Desktop:** upload the skill in **Settings → Capabilities → Skills**,
-and connect the **Listen Labs** connector under **Settings → Connectors** (it's in the
-official connector directory).
+and connect the official **Listen Labs** connector —
+[claude.ai/directory/connectors/listen-labs](https://claude.ai/directory/connectors/listen-labs).
 
 ## Try it
 
