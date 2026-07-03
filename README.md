@@ -16,7 +16,6 @@ references/
 ├── connect.md            # how to connect the Listen MCP server, per client
 ├── tools.md              # full reference for all 11 MCP tools
 └── examples.md           # end-to-end worked flows (create→launch, edit→publish, analysis)
-evals/evals.json          # test prompts for iterating on the skill
 ```
 
 ## Install

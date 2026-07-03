@@ -104,6 +104,10 @@ history:
     `audio_screen` | `text`. The `*_screen` modes have respondents share their screen —
     they're the right pick for website, app, or prototype testing; the other modes
     can't observe the product.
+- If a `buttonClick` doesn't take — the agent re-asks the same question and the study
+  config is unchanged (seen with `interview_mode` when the agent recommends a different
+  mode) — don't keep retrying the button. State the choice as a plain `prompt` instead
+  ("Text mode, please — set it and move on to the study guide"), which commits reliably.
 - Call `get_study_state` first when you don't have a fresh snapshot of the study.
 - Edits to an **already-launched** study land in a dev revision that respondents don't see
   until `publish_study` (or the next `launch_study`) promotes it. Always tell the user
