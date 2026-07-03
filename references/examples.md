@@ -157,7 +157,51 @@ get_response(study_id: "287…", readable_id: 7)
 
 ---
 
-## Example 5 — Not connected yet
+## Example 5 — Website usability test (screen share)
+
+> **User:** We just shipped a redesigned checkout at shop.acme.com. Can you set up a
+> usability test where ~15 people actually go through the site and think aloud?
+
+Website and prototype tests hinge on two things the other examples don't exercise: a
+**screen-share interview mode** and a **task-based study guide that names the URL**.
+Put both in the seed prompt so the creation agent builds the right guide:
+
+```
+create_study(prompt: "Moderated usability test of the redesigned checkout flow at
+  https://shop.acme.com. Interview ~15 online shoppers. Respondents share their screen,
+  open the site, and complete tasks while thinking aloud: (1) find a product under $50,
+  (2) add it to the cart, (3) go through checkout up to the payment step. Probe on
+  confusion, hesitation, trust concerns, and anything they'd change.")
+→ { studyId: "222…", chatId: "ccc…", … }
+```
+
+When onboarding reaches the interview-mode stage, pick a screen mode from `nextActions`:
+
+```
+edit_study(studyId: "222…", chatId: "ccc…",
+  buttonClick: { type: "button_press", buttonType: "interview_mode",
+                 actionTitle: "Audio + screen share",
+                 data: { interviewMode: "audio_screen" } })
+```
+
+- `audio_screen` — voice + shared screen; the usual pick for website testing.
+- `video_screen` — camera + screen, when the user also wants facial reactions.
+- Plain `video` / `audio` / `text` modes can't see the site. If the user asked for a
+  website or prototype test, don't let onboarding land on one of these — say why and
+  pick a screen mode.
+
+When you render the finished guide verbatim, check it like a researcher before asking
+for sign-off: the site URL must appear in the instructions respondents actually see,
+the tasks should be concrete and ordered, and there should be think-aloud prompting
+("tell me what you're looking at / expecting"). Fix gaps with plain `edit_study`
+prompts ("put the checkout URL in the intro block", "make task 2 more specific").
+
+The launch gate is unchanged (Example 1): `get_study_state` cost preview → explicit
+confirm → `launch_study`.
+
+---
+
+## Example 6 — Not connected yet
 
 > **User:** Can you launch a Listen study for me?
 

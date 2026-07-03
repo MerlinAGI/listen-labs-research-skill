@@ -101,7 +101,9 @@ history:
   defines what's clickable at each stage.
   - `data.recruitmentType`: `self` (user brings participants) | `panel` (Listen recruits).
   - `data.interviewMode`: `video` | `video_screen` | `audio` | `audio_text` |
-    `audio_screen` | `text`.
+    `audio_screen` | `text`. The `*_screen` modes have respondents share their screen —
+    they're the right pick for website, app, or prototype testing; the other modes
+    can't observe the product.
 - Call `get_study_state` first when you don't have a fresh snapshot of the study.
 - Edits to an **already-launched** study land in a dev revision that respondents don't see
   until `publish_study` (or the next `launch_study`) promotes it. Always tell the user

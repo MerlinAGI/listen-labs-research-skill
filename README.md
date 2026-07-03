@@ -44,6 +44,7 @@ official connector directory).
 
 - *"Interview 25 marketing managers about whether they'd pay for AI-written ad copy, and get it running."*
 - *"Set up a study to test our new onboarding flow — I'll bring my own participants."*
+- *"Run a usability test of our redesigned checkout at shop.acme.com — 15 people, screen share, thinking aloud."*
 - *"Add a screener for prior AI-tool usage to my pricing study, then push it live."*
 - *"What did respondents in the ad message study say about pricing? Quotes please."*
 
