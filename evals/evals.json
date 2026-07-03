@@ -1,0 +1,55 @@
+{
+  "skill_name": "listen-research",
+  "notes": "Runs require a session with the Listen Labs MCP server connected and authenticated. Eval 1 and 3 mutate real account state (draft studies / dev revisions) — clean up drafts afterward. NEVER let an eval run call launch_study; the assertions check that launch is gated, not performed.",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to find out if marketing managers would actually pay for an AI tool that writes their ad copy. can you set up interviews with like 25 of them? dont launch anything yet, just get it ready",
+      "expected_output": "Resolves org (list_creatable_orgs), calls create_study with a rich prompt, walks onboarding via edit_study with the persisted chatId and nextActions buttonClicks, renders the full study guide verbatim (every block/question/option), and stops WITHOUT calling launch_study — ending with an offer to launch plus a cost preview.",
+      "files": [],
+      "assertions": [
+        "create_study was called exactly once (no duplicate studies)",
+        "All follow-up creation turns used edit_study with the chatId returned by create_study",
+        "The complete study guide (all blocks, questions, and answer options) was rendered to the user, not summarized",
+        "launch_study was never called",
+        "The final message tells the user the study is a draft and what launching would cost or that a cost preview is the next step"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "whats the latest from my StyleFits ad message study? give me the main themes on pricing with actual quotes",
+      "expected_output": "Finds the study via list_studies with textHint (not by paging everything), confirms has_analysis, calls get_study_analysis, and reports pricing themes where every quote is verbatim and immediately followed by its [Source] link copied from the tool output.",
+      "files": [],
+      "assertions": [
+        "list_studies was called with a textHint filter rather than dumping all studies",
+        "get_study_analysis was called on the matched study",
+        "Every quote in the answer is followed immediately by a [Source] markdown link",
+        "No quote, metric, or finding appears in the answer that is not present in the tool output"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "on my LooksMax trust study, add a screener question that only lets through people who've used a face-rating app before. its already live so make sure real respondents get the new version",
+      "expected_output": "Locates the study (asking to disambiguate if multiple LooksMax studies match), snapshots with get_study_state, sends one natural-language edit_study (fresh chat, prompt-only), shows the updated screener/guide verbatim, then calls publish_study (not launch_study) so the live study serves the new revision.",
+      "files": [],
+      "assertions": [
+        "get_study_state was called before edit_study",
+        "edit_study was called with a prompt and without a fabricated buttonClick",
+        "publish_study was called to promote the dev revision (launch_study was not used for this)",
+        "The user was shown the updated study guide or screener before/alongside publishing"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "hey can claude talk to listen labs? i want to be able to launch studies from here. set me up",
+      "expected_output": "Recognizes the Listen MCP server may not be connected, gives client-appropriate setup steps (server URL https://listenlabs.ai/mcp, OAuth), and offers to verify with list_creatable_orgs / list_studies once connected.",
+      "files": [],
+      "assertions": [
+        "The answer includes the server URL https://listenlabs.ai/mcp",
+        "The answer gives concrete setup steps for the user's client (e.g. claude mcp add for Claude Code, or Settings → Connectors for Claude.ai)",
+        "The answer mentions OAuth login / authentication as part of setup",
+        "The answer proposes a verification step after connecting"
+      ]
+    }
+  ]
+}
