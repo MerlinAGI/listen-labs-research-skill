@@ -8,9 +8,9 @@ Describe a research goal in plain English and Claude walks the guided study setu
 you the exact interview guide respondents will see, gates the launch behind a cost
 preview, and later pulls sourced findings out of the transcripts and analysis.
 
-The skill is a single self-contained [SKILL.md](SKILL.md) — it carries the workflows and
-guardrails, and leans on the Listen MCP tool schemas for parameter details, so it works
-anywhere the skill file travels alone.
+The skill is a single self-contained [SKILL.md](SKILL.md) — workflows, guardrails, and
+worked examples inline, leaning on the Listen MCP tool schemas for parameter details, so
+it works anywhere the skill file travels alone.
 
 ## Install
 

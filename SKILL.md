@@ -136,3 +136,113 @@ Panel recruitment (Listen finds participants) has an upfront cost; a self-recrui
 - Never re-call `create_study` to fix a study you just made — that creates a second
   study. Edit the one you have.
 - Call `get_study_state` before mutating any study you didn't just create.
+
+## Worked examples
+
+Compressed flows showing tool order and where to stop and talk to the user. Calls are
+shown as `tool(args)`; responses trimmed to the fields that drive the next step.
+
+### Create → launch
+
+> "I want to find out if marketing managers would pay for an AI ad-copy tool. Set up
+> interviews with ~25 of them and get it running."
+
+"Get it running" is launch intent — still confirm cost before spending.
+
+```
+list_creatable_orgs()              → one org: proceed silently
+create_study(prompt: "Interview ~25 marketing managers who run paid campaigns.
+  Goal: would they pay for AI-written ad copy — current workflow, pain points,
+  price expectations.")
+                                   → studyId "111…", chatId "aaa…",
+                                     nextActions: [use-panel, bring-my-own]
+```
+
+Render the guide verbatim, then relay the real decision: panel or their own contacts?
+User says panel:
+
+```
+edit_study(studyId: "111…", chatId: "aaa…",
+           buttonClick: <the use-panel button, copied from nextActions>)
+…continue the stages the same way; answer with a prompt where the user
+already told you (audience, ~25 people)…
+get_study_state(studyId: "111…")   → cost 375 credits, balance 500, no blockers
+```
+
+*"Launching recruits 25 panelists for 375 credits; balance goes 500 → 125. Confirm?"*
+Only on a clear yes: `launch_study(studyId)` → report what launched and the new balance.
+
+### "Set up a study" (create ≠ launch)
+
+> "Set up a study to test our new onboarding flow with existing users. I'll send it to
+> our mailing list myself."
+
+Same creation flow, choosing self-recruit ("bring my own"). Render the final guide and
+**stop**: *"Drafted — not live yet. Say the word and I'll launch, which activates your
+shareable interview link (bills per response)."* Don't call `launch_study` until they
+answer; launching returns the link to share.
+
+### Edit a live study, then publish
+
+> "On my trust study, add a screener question for people who've used a face-rating app
+> before — and make sure new respondents see it."
+
+```
+list_studies(textHint: "trust")    → 2 matches — ask which one
+get_study_state(studyId: "235…")   → live, published, recruitment running
+edit_study(studyId: "235…",        → fresh chat = direct-edit mode
+           prompt: "Add a screener question filtering for people who have
+           used a face-rating app before; screen out the rest.")
+```
+
+Show the updated screener verbatim. Respondents still see the old version until the
+study is re-published — say so, and on confirm: `publish_study(studyId)`. If they also
+want *more* respondents, that's `launch_study` with the usual cost gate.
+
+### Findings with sourced quotes
+
+> "What did people say about pricing in the ad message study? Give me the highlights."
+
+```
+list_studies(textHint: "ad message")  → 1 match, has_analysis: true
+get_study_analysis(study_id: "287…")
+```
+
+Report the themes, every quote verbatim with its `[Source]` link exactly as returned:
+
+> Several respondents anchored on subscription fatigue — "I already pay for three AI
+> tools, this would have to replace one" [Source](https://listenlabs.ai/response/…)
+
+If the analysis doesn't cover the question, go to transcripts — filtered, not wholesale:
+`get_study_responses(study_id, question_numbers: [4, 5])`, or `get_response(study_id,
+readable_id: 7)` to zoom in on one person. If the study never asked about it, say so
+and offer a follow-up study instead of stretching.
+
+### Website usability test (screen share)
+
+> "We just redesigned checkout at shop.acme.com — can you set up a test where ~15 people
+> go through the site and think aloud?"
+
+Two things matter here: a **screen-share interview format** and a **task-based guide
+that names the URL**. Seed both:
+
+```
+create_study(prompt: "Usability test of the redesigned checkout at
+  https://shop.acme.com. ~15 online shoppers share their screen, open the
+  site, and think aloud: (1) find a product under $50, (2) add it to the
+  cart, (3) go through checkout up to payment. Probe on confusion,
+  hesitation, and trust concerns.")
+```
+
+At the interview-format stage, pick a screen-share mode from `nextActions` — voice +
+screen is the usual pick; camera + screen when facial reactions matter too. Before
+sign-off, check the guide like a researcher: the URL appears in the respondent-facing
+instructions, tasks are concrete and ordered, and there's think-aloud prompting. Fix
+gaps with plain `edit_study` prompts. Launch gate unchanged.
+
+### Not connected yet
+
+> "Can you launch a Listen study for me?" — but no Listen tools exist in the session.
+
+Give the Step 0 setup for their client, have them connect (and restart/enable the
+connector), verify with `list_creatable_orgs`, then proceed as above.
