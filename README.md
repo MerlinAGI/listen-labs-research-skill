@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/29d206ac-22a5-49b7-b4a7-a0ddaf8c9459" width="500" />
+  <img width="354" height="125" alt="image" src="https://github.com/user-attachments/assets/fb44b1a1-e561-4f66-9b3d-026a39a4aaea" />
 </p>
 
 <h1 align="center">Listen Labs Customer Research Skill</h1>
