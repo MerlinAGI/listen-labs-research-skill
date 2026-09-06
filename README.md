@@ -73,3 +73,7 @@ project instead, and drop `--scope user` from the `claude mcp add` command.
   respondents will see.
 - **Quotes are always sourced** — every quote surfaced from transcripts or analyses keeps
   its `[Source]` deep link; unsourced claims are dropped.
+
+## License
+
+MIT. See LICENSE. "Listen Labs" and the Listen Labs logo are trademarks of Merlin AI, Inc. and are not covered by the MIT license.
