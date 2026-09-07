@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "listen-labs-research",
+  "version": "1.0.0",
+  "description": "Run real user research from your AI agent: create, launch, and analyze AI-moderated user-interview studies on Listen Labs.",
+  "author": {
+    "name": "Listen Labs",
+    "url": "https://listenlabs.com"
+  },
+  "homepage": "https://docs.listenlabs.com/mcp-docs",
+  "repository": "https://github.com/MerlinAGI/listen-labs-research-skill",
+  "keywords": [
+    "customer-research",
+    "user-interviews",
+    "qualitative-research",
+    "concept-testing",
+    "mcp"
+  ]
+}
